@@ -1,25 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import toast, { Toaster } from "react-hot-toast";
 import { useApi } from "../Helpers/helpers";
 
-
-
 const Home = () => {
-
   const { apiPost } = useApi(); // extracted apipost function from helpers.js
 
   const [product_name, setProductName] = useState("");
   const [product_category, setProductCategory] = useState("");
   const [product_price, setProductPrice] = useState("");
-  
+
   const navigate = useNavigate(); // For redirection after creation
-  
 
   const handleSubmit = async () => {
-
     if (!product_name || !product_category || !product_price) {
       toast.error("All fields are required !");
       return;
@@ -28,19 +23,16 @@ const Home = () => {
     const productData = {
       productName: product_name,
       productCategory: product_category,
-      productPrice: product_price
+      productPrice: product_price,
     };
 
     const token = localStorage.getItem("accessTokenFlowKart");
-    
+
     if (!token || token === "null") {
       toast.error("Authentication token missing. Please log in.");
       navigate("/login");
       return;
     }
-
-
-
 
     // try {
     //   const response = await fetch("http://localhost:8000/api/products", {
@@ -75,32 +67,25 @@ const Home = () => {
     //   toast.error(e.message);
     // }
 
-    const response = await apiPost("/products",productData);
+    const response = await apiPost("/products", productData);
 
-    if(response)
-    {
-      toast.success("Product created successfully!!")
-        setProductName("");
-        setProductCategory("");
-        setProductPrice("");
+    if (response) {
+      toast.success("Product created successfully!!");
+      setProductName("");
+      setProductCategory("");
+      setProductPrice("");
     }
-
   };
 
-
-
-
-
-
-  return (  
+  return (
     <div className="create_product">
       <div className="create_product_cont">
         <h1>Create Product</h1>
 
-        <TextField 
-          id="product-name" 
-          label="Product Name" 
-          className="custom-textfield" 
+        <TextField
+          id="product-name"
+          label="Product Name"
+          className="custom-textfield"
           placeholder="Enter product name (e.g., Apple iPhone 13)"
           variant="filled"
           type="text"
@@ -109,10 +94,10 @@ const Home = () => {
           autoComplete="off"
         />
 
-        <TextField 
-          id="product-category" 
+        <TextField
+          id="product-category"
           label="Product Category"
-          className="custom-textfield" 
+          className="custom-textfield"
           placeholder="Enter product category (e.g., Electronics)"
           variant="filled"
           type="text"
@@ -121,10 +106,10 @@ const Home = () => {
           autoComplete="off"
         />
 
-        <TextField 
-          id="product-price" 
-          label="Product Price" 
-          className="custom-textfield" 
+        <TextField
+          id="product-price"
+          label="Product Price"
+          className="custom-textfield"
           placeholder="Enter product price (e.g., $999.99)"
           variant="filled"
           type="number"
@@ -133,7 +118,13 @@ const Home = () => {
           autoComplete="off"
         />
 
-        <Button variant="outlined" className="logout-btn" onClick={handleSubmit}>Create</Button>
+        <Button
+          variant="outlined"
+          className="logout-btn"
+          onClick={handleSubmit}
+        >
+          Create
+        </Button>
       </div>
       <Toaster />
     </div>
@@ -141,5 +132,3 @@ const Home = () => {
 };
 
 export default Home;
-
-

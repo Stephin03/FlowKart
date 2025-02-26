@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 const BASE_URL = "http://localhost:8000/api";
 
 const apiRequest = async (endpoint, method, body = null, navigate) => {
-    
   try {
     const options = {
       method,
@@ -25,24 +24,16 @@ const apiRequest = async (endpoint, method, body = null, navigate) => {
 
     const response = await fetch(`${BASE_URL}${endpoint}`, options);
 
-    
-    if (response.status===200 || response.status===201) 
-    {
+    if (response.status === 200 || response.status === 201) {
       return await response.json();
-    } 
-    else if (response.status === 401) 
-    {
-      toast.error("User Unauthorized !!")
+    } else if (response.status === 401) {
+      toast.error("User Unauthorized !!");
       localStorage.removeItem("accessTokenFlowKart");
       navigate("/login");
-    } 
-    else 
-    {
+    } else {
       const error = await response.json();
       throw new Error(error.message || "Something went wrong");
     }
-
-    
   } catch (error) {
     toast.error(error.message);
     return null;
@@ -50,7 +41,6 @@ const apiRequest = async (endpoint, method, body = null, navigate) => {
 };
 
 export const useApi = () => {
-
   const navigate = useNavigate();
 
   return {

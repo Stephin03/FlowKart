@@ -36,8 +36,3 @@ const NavBar = () => {
 export default NavBar;
 
 
-// {user && user.name && (
-//     <div className="profile">
-//         <h3>{user.name[0].toUpperCase()}</h3> {/* Dynamic User Initial */}
-//     </div>
-// )}

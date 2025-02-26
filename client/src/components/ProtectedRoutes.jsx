@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
-import { useApi } from '../Helpers/helpers';
+import { useApi } from "../Helpers/helpers";
 import Lottie from "lottie-react";
-import Loading from '../assets/Loading.json';
+import Loading from "../assets/Loading.json";
 
 const ProtectedRoutes = () => {
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const {apiGet} = useApi()
- 
+  const { apiGet } = useApi();
 
   useEffect(() => {
     const tokenCheck = async () => {
@@ -41,12 +40,11 @@ const ProtectedRoutes = () => {
         // }
         const response = await apiGet("/currentUser");
 
-        if(response)
-        {
+        if (response) {
           setIsAuthenticated(true);
         }
       } else {
-        // No token found 
+        // No token found
         setIsAuthenticated(false);
       }
       setCheckingAuth(false);
@@ -56,13 +54,15 @@ const ProtectedRoutes = () => {
   }, []);
 
   if (checkingAuth) {
-    
     return (
-    <div className="animeLoading">
-      <Lottie animationData={Loading} loop={true} 
-      style={{ width: 200, height: 200 }}/>
-    </div>
-    )
+      <div className="animeLoading">
+        <Lottie
+          animationData={Loading}
+          loop={true}
+          style={{ width: 200, height: 200 }}
+        />
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
@@ -75,6 +75,3 @@ const ProtectedRoutes = () => {
 };
 
 export default ProtectedRoutes;
-
-
-
